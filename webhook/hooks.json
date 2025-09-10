@@ -1,0 +1,8 @@
+[
+  {
+    "id": "redeploy-lab0",
+    "execute-command": "/home/log430/log430-a25-labo0/webhook/redeploy.sh",
+    "command-working-directory": "/home/log430/log430-a25-labo0",
+    "http-methods": ["POST"]
+  }
+]
