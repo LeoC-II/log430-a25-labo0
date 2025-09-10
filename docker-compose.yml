@@ -1,5 +1,10 @@
 services:
   calculator:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: labo0-calculator
     volumes:
       - .:/app
+    stdin_open: true
+    tty: true
