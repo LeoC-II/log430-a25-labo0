@@ -22,4 +22,4 @@ jobs:
           pip install pytest
 
       - name: Rouler les tests unitaires
-        run: python -m pytest
+        run: python3 -m pytest
