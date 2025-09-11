@@ -2,8 +2,8 @@
 #cd "/home/log430/log430-a25-labo0"
 
 echo "Get updates from git"
-git fetch --all
-git pull
+git fetch origin master
+git reset --hard origin/master
 
 echo "Build & deploy new image"
 docker stop $(docker ps -q --filter ancestor=labo0-calculator:latest)
