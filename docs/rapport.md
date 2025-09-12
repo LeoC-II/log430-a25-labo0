@@ -1,5 +1,8 @@
-# Rapport laboratoire 0
-Alex Beauchamp
+# Labo 00 – Infrastructure (Git, Docker, CI/CD)
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Ets_quebec_logo.png" width="250">    
+ÉTS - LOG430 - Architecture logicielle - Chargé de laboratoire: Gabriel C. Ullmann, Automne 2025.  
+
+Travail réalisé par Alex Beauchamp
 
 ## Question 1: Échec d'un test
 Lors de l'échec d'un test, les détails de l'erreur sont affichés, incluant la différence entre la réponse attendue
