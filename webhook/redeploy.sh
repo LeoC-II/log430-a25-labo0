@@ -3,7 +3,7 @@
 
 echo "Get updates from git"
 git fetch origin master
-git reset --hard origin/master
+git reset --hard origin/main
 
 echo "Build & deploy new image"
 docker stop $(docker ps -q --filter ancestor=labo0-calculator:latest)
