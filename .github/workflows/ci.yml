@@ -30,5 +30,21 @@ jobs:
     runs-on: self-hosted
     needs: test
     steps:
-      - name: activate webhook
-        run: curl -X POST 10.194.32.213:9000/hooks/redeploy-lab0
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+      - name: SSH into server and deploy application
+        run: |
+          # login to server
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
+          cd /var/www/your-app
+          
+          #login to github and pull
+          git config --global credential.helper store
+          echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
+          git pull origin master
+          
+          #stop, rbuild and restart docker container
+          docker stop $(docker ps -q --filter ancestor=labo0-calculator:latest)
+          docker system prune -af --volumes
+          docker build -t labo0-calculator .
+          docker run -it labo0-calculator
