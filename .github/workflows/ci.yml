@@ -31,4 +31,4 @@ jobs:
     needs: test
     steps:
       - name: activate webhook
-        run: curl -X POST 10.194.32.213:9000/hooks/redeploy-lab0.sh
+        run: curl -X POST 10.194.32.213:9000/hooks/redeploy-lab0
