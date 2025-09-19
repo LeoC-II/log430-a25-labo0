@@ -34,17 +34,20 @@ jobs:
         run: sudo apt-get install -y sshpass
       - name: SSH into server and deploy application
         run: |
-          # login to server
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
-          cd /var/www/your-app
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
+            set -e
+            cd /var/www/your-app
           
-          #login to github and pull
-          git config --global credential.helper store
-          echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" > ~/.git-credentials
-          git pull origin master
+            git config --global credential.helper store
+            echo 'https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}' > ~/.git-credentials
+            git pull origin master
           
-          #stop, rbuild and restart docker container
-          docker stop $(docker ps -q --filter ancestor=labo0-calculator:latest)
-          docker system prune -af --volumes
-          docker build -t labo0-calculator .
-          docker run -it labo0-calculator
+            CONTAINER_ID=\$(docker ps -q --filter ancestor=labo0-calculator:latest)
+            if [ -n \"\$CONTAINER_ID\" ]; then
+              docker stop \$CONTAINER_ID
+              docker rm \$CONTAINER_ID
+            fi
+          
+            docker build -t labo0-calculator .
+            docker run -d --restart always --name labo0-calculator-container -p 80:80 labo0-calculator
+          "
