@@ -30,7 +30,5 @@ jobs:
     runs-on: self-hosted
     needs: test
     steps:
-      - name: start webhook
-        uses: actions/checkout@v3
       - name: activate webhook
-        uses: curl -X POST 10.194.32.213:9000/hooks/redeploy-lab0.sh
+        run: curl -X POST 10.194.32.213:9000/hooks/redeploy-lab0.sh
